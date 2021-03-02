@@ -1,0 +1,29 @@
+<html>
+    <title>Promise</title>
+    <body>
+        <p>Welcome To .....</p>
+    </body>
+    <script>
+        let whereAmi = (lat, long) =>{
+            var promise = new Promise(function(resolve, reject) {
+                let URL = `https://geocode.xyz/${lat},${long}?geoit=json`;
+            fetch(URL)
+                .then(response => response.json())
+                .then(data =>{
+                    let country = data.country;
+                    if(!country){
+                        reject(data);
+                    }else{
+                        resolve(data);
+                    }
+                })
+        });
+        promise.then(data =>{
+            console.log(`Your In ${data.region}, ${data.country}`);
+        }).catch(data => {
+            console.log(data.error.message);
+        })
+        }
+        whereAmi('16.4854624','80.6686334');
+    </script>
+</html>
